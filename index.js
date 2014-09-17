@@ -53,13 +53,20 @@ function del(request, response) {
 	console.log("DELETE:: Logout from the server");
  	// TODO: remove session id via login.logout(xxx)
  	// No need to set session id in the response cookies since you just logged out!
-
-  	response.end('Logged out from the server\n');
+	var cookies = request.cookies;
+	var sid = cookies['session_id'];
+	login.logout(sid);
+	response.end('Logged out from the server\n');
+  	
 };
 
 function put(request, response) {
 	console.log("PUT:: Re-generate new seesion_id for the same user");
 	// TODO: refresh session id; similar to the post() function
+	var name=request.body.name;
+	var email=request.body.email;
+	var newSessionId = login.login(name,email);
+	response.setHeader('Set-Cookie', 'session_id=' + newSessionId);
 
 	response.end("Re-freshed session id\n");
 };
