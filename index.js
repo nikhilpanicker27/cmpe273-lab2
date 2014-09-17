@@ -36,10 +36,15 @@ function get(request, response) {
 };
 
 function post(request, response) {
-	// TODO: read 'name and email from the request.body'
-	// var newSessionId = login.login('xxx', 'xxx@gmail.com');
-	// TODO: set new session id to the 'session_id' cookie in the response
-	// replace "Logged In" response with response.end(login.hello(newSessionId));
+	// TODO: read 'name and email from the request.body' 
+	var name=request.body.name; 
+	var email=request.body.email;
+ 	// var newSessionId = login.login('xxx', 'xxx@gmail.com'); 
+ 	var newSessionId = login.login(name,email); 
+ 	// TODO: set new session id to the 'session_id' cookie in the response 
+ 	response.setHeader('Set-Cookie', 'session_id=' + newSessionId); 
+ 	// replace "Logged In" response with response.end(login.hello(newSessionId)); 
+ 	response.end(login.hello(newSessionId)); response.end("Logged In\n");
 
 	response.end("Logged In\n");
 };
